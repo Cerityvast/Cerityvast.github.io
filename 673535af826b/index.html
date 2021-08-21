@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>(论文阅读笔记) A Survey on Complex Knowledge Base Question Answering Methods, Challenges and Solutions | Cerityvast</title><meta name="keywords" content="KBQA"><meta name="author" content="Cerityvast"><meta name="copyright" content="Cerityvast"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2105.11644.pdf 摘要本论文主要阐述KBQA（知识库问答）的任务背景，然后介绍了解决复杂KBQA问题的两种主流方法，分别是基于语义解析（SP，semantic parse）和信息检索（IR，imformation retrieval）的方法。 然后本文回顾了这两类方法对典型挑战的解决方案，并总结了未来研究的方向。 引言知识库（KB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(论文阅读笔记) A Survey on Complex Knowledge Base Question Answering Methods, Challenges and Solutions">
+<meta property="og:url" content="https://www.chenghao.top/673535af826b/index.html">
+<meta property="og:site_name" content="Cerityvast">
+<meta property="og:description" content="论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2105.11644.pdf 摘要本论文主要阐述KBQA（知识库问答）的任务背景，然后介绍了解决复杂KBQA问题的两种主流方法，分别是基于语义解析（SP，semantic parse）和信息检索（IR，imformation retrieval）的方法。 然后本文回顾了这两类方法对典型挑战的解决方案，并总结了未来研究的方向。 引言知识库（KB">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.chenghao.top/img/personal/blog_icon.jpg">
+<meta property="article:published_time" content="2021-08-21T02:04:47.000Z">
+<meta property="article:modified_time" content="2021-08-21T08:36:27.305Z">
+<meta property="article:author" content="Cerityvast">
+<meta property="article:tag" content="KBQA">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.chenghao.top/img/personal/blog_icon.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://www.chenghao.top/673535af826b/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '(论文阅读笔记) A Survey on Complex Knowledge Base Question Answering Methods, Challenges and Solutions',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-21 00:36:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="wizard-scene"><div class="wizard-objects"><div class="wizard-square"></div><div class="wizard-circle"></div><div class="wizard-triangle"></div></div><div class="wizard"><div class="wizard-body"></div><div class="wizard-right-arm"><div class="wizard-right-hand"></div></div><div class="wizard-left-arm"><div class="wizard-left-hand"></div></div><div class="wizard-head"><div class="wizard-beard"></div><div class="wizard-face"><div class="wizard-adds"></div></div><div class="wizard-hat"><div class="wizard-hat-of-the-hat"></div><div class="wizard-four-point-star --first"></div><div class="wizard-four-point-star --second"></div><div class="wizard-four-point-star --third"></div></div></div></div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/personal/blog_icon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Cerityvast</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/gallery/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">(论文阅读笔记) A Survey on Complex Knowledge Base Question Answering Methods, Challenges and Solutions</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-21T02:04:47.000Z" title="发表于 2021-08-20 18:04:47">2021-08-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-21T08:36:27.305Z" title="更新于 2021-08-21 00:36:27">2021-08-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/">论文阅读</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="(论文阅读笔记) A Survey on Complex Knowledge Base Question Answering Methods, Challenges and Solutions"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="/673535af826b/title.png" alt="论文标题"></p>
+<p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2105.11644.pdf">https://arxiv.org/pdf/2105.11644.pdf</a></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>本论文主要阐述KBQA（知识库问答）的任务背景，然后介绍了解决复杂KBQA问题的两种主流方法，分别是基于语义解析（<strong>SP，semantic parse</strong>）和信息检索（<strong>IR，imformation retrieval</strong>）的方法。</p>
+<p>然后本文回顾了这两类方法对典型挑战的解决方案，并总结了未来研究的方向。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>知识库（<strong>KB，Knowledge Base</strong>）是一个 *(subject, relation, object)*形式的的集合。知识库问答（<strong>KBQA，Knowledge Base Question Answer</strong>）是将知识库作为其知识源来回答自然语言问题。早期KBQA只在简单问题上进行应用，近期研究人员开始在KB上对复杂问题进行研究。</p>
+<p>简单问题：即仅涉及单个（subject，relation，object）。</p>
+<p>复杂问题：问题中包含多个subject从而涉及多跳推理，表达了复合关系以及数值运算。</p>
+<p><em><strong>基于语义解析（SP-based）</strong></em>的方法将问题表示成逻辑形式，然后在知识库中执行该逻辑形式从而得到答案；<em><strong>基于信息检索（IR-based）</strong></em>的方法构建一个问题相关地特定子图，从而获得与问题相关的综合信息，并根据这些信息对实体与问题之间的相关性进行排名，并选取排名高的实体。</p>
+<hr>
+<p>将这两种主流方法应用到复杂问题的知识库问答上，在相应方法的不同部分带来了相应的<strong>挑战</strong>：</p>
+<ul>
+<li>在SP-based方法中使用的解析器难以涵盖各种复杂的查询（多跳推理、约束关系和数值运算等），在IR-based的类似方法可能无法回答复杂的查询，因为它们的排名是在没有可追溯推理的情况下在小范围实体上执行的。</li>
+<li>复杂的问题涉及的主题以及关系也更多，从而导致解析时潜在的逻辑形式存在着更大的搜索空间，这将极大增加计算资源的消耗。同时更多的主题和关系可能阻碍IR-based方法查找所有相关实体进行排名。</li>
+<li>两种方法首先都需要对查询问题进行理解，当问题在语法和语义上变得复杂起来，模型需要具有强大的自然语言理解和泛化能力。</li>
+<li>标记复杂问题答案的推理路径代价很大。通常仅仅只提供问答对，这表明SP-based和IR-based方法必须分别在没有正确逻辑形式和推理路径注释的情况下进行训练。这种弱监督信号对这两种方法也带来了相应的难题。</li>
+</ul>
+<h2 id="两种主流方法"><a href="#两种主流方法" class="headerlink" title="两种主流方法"></a>两种主流方法</h2><p>SP-based方法遵循解析然后执行（<em>parse-then-execute</em>）范式，IR-based方法遵循检索和排名（retrieval and rank）范式。</p>
+<p><img src="/673535af826b/paradigm.png" alt="范式图解"></p>
+<p><strong>SP-based方法的基本步骤：</strong></p>
+<ol>
+<li>通过<em>Question Understanding</em>模块对问题进行语法和语义分析并获得编码的问题（Encoded Question）；</li>
+<li>通过<em>Logical Parsing</em>模块将Encoded Question转化为未实例化的逻辑形式，未实例化的逻辑形式是指是问题的句法表示，没有实体和关系的基础；</li>
+<li>通过<em>KB Grounding</em>模块将对结构化知识库进行一些语义对齐，进一步实例化和验证逻辑形式从而可以在知识库执行；</li>
+<li>通过<em>KB Execution</em>模块将解析的逻辑形式在知识库上执行，从而回去预测的答案。</li>
+</ol>
+<p><strong>IR-based方法的基本步骤：</strong></p>
+<ol>
+<li>通过<em>Retrieval Source Construction</em>模块从知识库中提取问题特定子图，理想情况下，该图包括所有与问题相关的实体和关系，分别作为节点和边；</li>
+<li>通过<em>Question Representation</em>模块将输入问题进行编码。该模块分析问题的语义并输出推理指令，这些指令通常表示为向量；</li>
+<li>通过<em>Graph Based Reasoning</em>模块通基于向量的计算进行语义匹配，以传播然后沿图中的相邻实体聚合信息。推理状态基于推理指令进行更新（语义匹配）。2、3步骤可重复多次来进行推理。</li>
+<li>通过<em>Answer Ranking</em>模块来根据推理结束时的推理状态对图中的实体进行排序，排名靠前的实体被预测为问题的答案。</li>
+</ol>
+<p><strong>SP-based的优缺点（Pros and Cons）</strong>：</p>
+<ul>
+<li>Pros：通过生成表现丰富的逻辑形式来产生更具可解释性的推理过程。</li>
+<li>Cons：严重依赖逻辑形式和解析算法的设计，这成为性能提升的瓶颈。</li>
+</ul>
+<p><strong>IR-based的优缺点（Pros and Cons）</strong>：</p>
+<ul>
+<li>Pros：对图结构进行复杂的推理并执行语义匹配。这种范式自然适合流行的端到端训练，并使IR-based的方法更易于训练。</li>
+<li>Cons：推理模型的黑盒风格使中间推理的可解释性降低。</li>
+</ul>
+<h2 id="挑战和解决方案"><a href="#挑战和解决方案" class="headerlink" title="挑战和解决方案"></a>挑战和解决方案</h2><p>![挑战及相应的解决方案](2021-08-20-论文阅读笔记-A-Survey-on-Complex-Knowledge-Base-Question-Answering-Methods-Challenges-and-Solutions/challenge and solution.png)</p>
+<h3 id="一、SP-based-Method"><a href="#一、SP-based-Method" class="headerlink" title="一、SP-based Method"></a>一、SP-based Method</h3><ul>
+<li><p><em>Question Understanding</em>模块</p>
+<p><strong>挑战</strong>：理解复杂的语义和语法</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p>1、<em>Adopt structural properties</em></p>
+<ul>
+<li><p><em>dependency parsing</em></p>
+<ul>
+<li><em>Automated template generation for question answering over knowledge graphs</em></li>
+<li><em>Never-ending learning for open-domain question answering over knowledge bases</em></li>
+<li><em>Knowledge base question answering via encoding of complex query graphs</em></li>
+</ul>
+</li>
+<li><p><em>AMR（Abstract Meaning Representation）</em></p>
+<ul>
+<li><em>Question answering over knowledge bases by leveraging semantic parsing and neuro-symbolic reasoning</em></li>
+</ul>
+</li>
+</ul>
+<p>2、<em>skeleton-based parsing</em></p>
+<ul>
+<li><em>SPARQA: skeleton-based semantic parsing for complex questions over knowledge bases</em></li>
+</ul>
+<p>3、<em>structural properties based matching</em></p>
+<ul>
+<li><em>Learning to rank query graphs for complex question answering over knowledge graphs</em></li>
+<li><em>Knowledge-based question answering by tree-to-sequence learning</em></li>
+<li><em>Formal query building with query structure prediction for complex question answering over knowledge base</em></li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><em>Logical parsing</em>模块</p>
+<p><strong>挑战</strong>：解析复杂的查询</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p><em>Develop expressive targets for parsing</em></p>
+<ul>
+<li><em>template based queries</em><ul>
+<li><em>More accurate question answering on freebase</em></li>
+</ul>
+</li>
+<li><em>query graph</em><ul>
+<li><em>Question answering with knowledge base</em></li>
+<li><em>Automated template generation for question answering over knowledge graphs</em></li>
+<li><em>A state-transition framework to answer complex questions over knowledge base</em></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><em>KB grounding</em>模块</p>
+<p><strong>挑战</strong>：更大的搜索空间</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p>1、<em>Narrow down search space by decompose-execute-join strategy</em></p>
+<ul>
+<li><em>Question answering over knowledge graphs: Question understanding via template decomposition</em></li>
+<li><em>Learning to answer complex questions over knowledge bases with query composition</em></li>
+</ul>
+<p>2、<em>expand-and-rank strategy</em></p>
+<ul>
+<li><em>UHop:An unrestricted-hop relation extraction framework for knowledge-based question answering</em></li>
+<li><em>Multi-hop knowledge base question answering with an iterative sequence matching model</em></li>
+<li><em>Query graph generation for answering multi-hop complex questions from knowledge bases</em></li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><em>Training procedure</em>模块</p>
+<p><strong>挑战</strong>：在弱监督信号下训练</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p>1、<em>Adopt reward shaping strategy to strengthen training signal</em></p>
+<ul>
+<li><em>Complex program induction for querying knowledge bases in the absence of gold programs</em></li>
+<li><em>Less is more: Data-efficient complex question answering over knowledge bases</em></li>
+<li><em>Hierarchical query graph generation for complex question answering over knowledge graph</em></li>
+</ul>
+<p>2、<em>conduct pre-training to initialize the model</em></p>
+<ul>
+<li><em>Hierarchical query graph generation for complex question answering over knowledge graph</em></li>
+</ul>
+<p>3、<em>iterative maximum-likelihood training</em></p>
+<ul>
+<li><em>Neural symbolic machines: Learning semantic parsers on Freebase with weak supervision</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="二、IR-based-Method"><a href="#二、IR-based-Method" class="headerlink" title="二、IR-based Method"></a>二、IR-based Method</h3><ul>
+<li><p><em>Retrieval source construction</em>模块</p>
+<p><strong>挑战</strong>：在不完全的知识库（子图）下推理</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p>1、<em>Supplement KB with extra corpus</em></p>
+<ul>
+<li><em>Open domain question answering using early fusion of knowledge bases and text</em></li>
+<li><em>Pullnet: Open domain question answering with iterative retrieval on knowledge bases and text</em></li>
+</ul>
+<p>2、<em>fuse extra textual information into entity representations</em></p>
+<ul>
+<li><em>Improving question answering over incomplete kbs with knowledge-aware reader</em></li>
+<li><em>Open domain question answering based on text enhanced knowledge graph with hyperedge infusion</em></li>
+</ul>
+<p>3、<em>leverage KB embeddings</em></p>
+<ul>
+<li><em>Improving multi-hop question answering over knowledge graphs using knowledge base embeddings</em></li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><em>Question representation</em>模块</p>
+<p><strong>挑战</strong>：理解复杂的语义</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p>1、<em>Update with reasoned information</em></p>
+<ul>
+<li><em>Key-value memory networks for directly reading documents</em></li>
+<li><em>An interpretable reasoning network for multi-relation question answering</em></li>
+<li><em>Enhancing key-value memory neural networks for knowledge based question answering</em></li>
+</ul>
+<p>2、<em>dynamic attention over the question</em></p>
+<ul>
+<li><em>Improving multi-hop knowledge base question answering by learning intermediate supervision signals</em></li>
+</ul>
+<p>3、<em>enrich the question representation with contextual information of graph</em></p>
+<ul>
+<li><em>Open domain question answering using early fusion of knowledge bases and text</em></li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><em>Graph  based reasoning</em>模块</p>
+<p><strong>挑战</strong>：推理的不可解释性</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p>1、<em>Provide traceable reasoning path</em></p>
+<ul>
+<li><em>An interpretable reasoning network for multi-relation question answering</em></li>
+<li> <em>Enhancing key-value memory neural networks for knowledge based question answering</em></li>
+</ul>
+<p>2、<em>hyperedge based reasoning</em></p>
+<ul>
+<li><em>Two-phase hypergraph based reasoning with dynamic relations for multi-hop kbqa</em></li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><em>Training procedure</em>模块</p>
+<p><strong>挑战</strong>：弱监督信号下的训练</p>
+<p><strong>解决方法（方法及论文）</strong>：</p>
+<p>1、<em>Provide shaped reward as intermediate feedback</em></p>
+<ul>
+<li><em>Stepwise reasoning for multi-relation question answering over knowledge graph with weak supervision</em></li>
+</ul>
+<p>2、<em>augment intermediate supervision signals with bidirectional search algorithm</em></p>
+<ul>
+<li><em>Improving multi-hop knowledge base question answering by learning intermediate supervision signals</em></li>
+</ul>
+<p>3、<em>adopt variational algorithm to train entity linking module</em></p>
+<ul>
+<li><em>Variational reasoning for question answering with knowledge graph</em></li>
+</ul>
+</li>
+</ul>
+<h2 id="结论及未来方向"><a href="#结论及未来方向" class="headerlink" title="结论及未来方向"></a>结论及未来方向</h2><p>本文概述了复杂 KBQA 的典型挑战和相应的解决方案，并总结了广泛采用的SP-based的方法以及IR-based的方法。我们相信复杂的KBQA将继续成为一个活跃且有前景的研究领域，具有广泛的应用，例如自然语言理解、组合泛化、多跳推理。</p>
+<p><em><strong>未来方向</strong></em>：</p>
+<ul>
+<li><p><strong>Evolutionary KBQA</strong></p>
+</li>
+<li><p><strong>Robust and Interpretable Model</strong></p>
+</li>
+<li><p><strong>More General Knowledge Base</strong></p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Cerityvast</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://www.chenghao.top/673535af826b/">https://www.chenghao.top/673535af826b/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://www.chenghao.top" target="_blank">Cerityvast</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/KBQA/">KBQA</a></div><div class="post_share"><div class="social-share" data-image="/img/personal/blog_icon.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/db8a573abadf/"><img class="next-cover" src="/" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">(论文阅读笔记) Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/personal/blog_icon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Cerityvast</div><div class="author-info__description">今日事，今日毕</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Cerityvast"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Cerityvast" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:Cerityvast@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">1.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">2.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E4%B8%BB%E6%B5%81%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">两种主流方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%91%E6%88%98%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">4.</span> <span class="toc-text">挑战和解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81SP-based-Method"><span class="toc-number">4.1.</span> <span class="toc-text">一、SP-based Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81IR-based-Method"><span class="toc-number">4.2.</span> <span class="toc-text">二、IR-based Method</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA%E5%8F%8A%E6%9C%AA%E6%9D%A5%E6%96%B9%E5%90%91"><span class="toc-number">5.</span> <span class="toc-text">结论及未来方向</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/673535af826b/" title="(论文阅读笔记) A Survey on Complex Knowledge Base Question Answering Methods, Challenges and Solutions">(论文阅读笔记) A Survey on Complex Knowledge Base Question Answering Methods, Challenges and Solutions</a><time datetime="2021-08-21T02:04:47.000Z" title="发表于 2021-08-20 18:04:47">2021-08-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/db8a573abadf/" title="(论文阅读笔记) Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks">(论文阅读笔记) Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks</a><time datetime="2021-08-12T05:07:03.000Z" title="发表于 2021-08-11 21:07:03">2021-08-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/9768fa04dcdf/" title="(论文阅读笔记) Left-Center-Right Separated Neural Network for Aspect-based Sentiment Analysis with Rotatory Attention">(论文阅读笔记) Left-Center-Right Separated Neural Network for Aspect-based Sentiment Analysis with Rotatory Attention</a><time datetime="2021-06-09T00:12:04.000Z" title="发表于 2021-06-08 16:12:04">2021-06-08</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/1263c7b9eab4/" title="(论文阅读笔记) A Unified Model for Opinion Target Extraction and Target Sentiment Prediction">(论文阅读笔记) A Unified Model for Opinion Target Extraction and Target Sentiment Prediction</a><time datetime="2021-06-02T02:53:07.000Z" title="发表于 2021-06-01 18:53:07">2021-06-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2021 By Cerityvast</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">欢迎访问Cerityvast的博客</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script async="async">var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> {preloader.endLoading()})
+setTimeout(function(){preloader.endLoading();}, 3000);</script></div><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
